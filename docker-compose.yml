@@ -1,6 +1,8 @@
 services:
   jellytube:
-    build: ./packages/app
+    build:
+      context: ./packages/app
+      dockerfile: Dockerfile
     container_name: jellytube
     env_file:
       - .env
@@ -11,7 +13,9 @@ services:
       - jellytube-proxy
 
   jellytube-proxy:
-    build: ./packages/proxy
+    build:
+      context: ./packages/proxy
+      dockerfile: Dockerfile
     container_name: jellytube-proxy
     restart: unless-stopped
     ports:
