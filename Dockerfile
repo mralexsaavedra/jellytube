@@ -13,6 +13,8 @@ COPY tsconfig.json ./
 COPY src ./src
 
 RUN pnpm run build
+# Remove prepare script to prevent husky from running during prune
+RUN npm pkg delete scripts.prepare
 # Prune dev dependencies
 RUN pnpm prune --prod
 
