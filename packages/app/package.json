@@ -7,8 +7,7 @@
     "build": "tsc",
     "dev": "ts-node src/main.ts",
     "lint": "eslint src --ext .ts",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "prepare": "husky"
+    "format": "prettier --write \"src/**/*.ts\""
   },
   "keywords": [
     "jellyfin",
