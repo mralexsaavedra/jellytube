@@ -28,8 +28,8 @@ services:
       - COMPROMISED_PASSWORD_CHECK=true
       - DISABLE_REGISTRATION=false
       - FEED_RETENTION=30
-      - MATRIX_SERVER=
-      - MATRIX_TOKEN=
+      - MATRIX_SERVER=https://matrix.org
+      - MATRIX_TOKEN=disabled
       - CAPTCHA_BASE_URL=https://api.capmonster.cloud
       - CAPTCHA_API_KEY=
     depends_on:
