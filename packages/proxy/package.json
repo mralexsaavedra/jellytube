@@ -1,0 +1,22 @@
+{
+  "name": "@jellytube/proxy",
+  "version": "1.0.0",
+  "description": "JellyTube Proxy - Stream resolver for YouTube videos",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "jellyfin",
+    "youtube",
+    "proxy",
+    "streaming"
+  ],
+  "author": "Alex Saavedra",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

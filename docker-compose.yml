@@ -1,6 +1,6 @@
 services:
   jellytube:
-    build: .
+    build: ./packages/app
     container_name: jellytube
     env_file:
       - .env
@@ -9,11 +9,9 @@ services:
     restart: unless-stopped
     depends_on:
       - jellytube-proxy
-    networks:
-      - jellytube_net
 
   jellytube-proxy:
-    build: ./proxy
+    build: ./packages/proxy
     container_name: jellytube-proxy
     restart: unless-stopped
     ports:
