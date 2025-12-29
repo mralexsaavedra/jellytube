@@ -9,6 +9,8 @@ services:
     restart: unless-stopped
     depends_on:
       - piped
+    networks:
+      - jellytube_net
 
   piped:
     image: 1337kavin/piped:latest
@@ -21,6 +23,8 @@ services:
     depends_on:
       - postgres
       - piped-proxy
+    networks:
+      - jellytube_net
 
   piped-proxy:
     image: 1337kavin/piped-proxy:latest
@@ -29,6 +33,8 @@ services:
     environment:
       - UDS=1
     # No ports needed if only communicated internally via docker network
+    networks:
+      - jellytube_net
 
   postgres:
     image: postgres:17-alpine
@@ -40,3 +46,9 @@ services:
       - POSTGRES_DB=piped
       - POSTGRES_USER=piped
       - POSTGRES_PASSWORD=secure_password_saavedra
+    networks:
+      - jellytube_net
+
+networks:
+  jellytube_net:
+    driver: bridge
