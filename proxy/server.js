@@ -13,9 +13,11 @@ app.get('/stream/:videoId', async (req, res) => {
   try {
     console.log(`[${new Date().toISOString()}] Resolving stream for: ${videoId}`);
 
-    // Get best COMBINED stream (single file with video+audio)
-    // Includes 4K if available as pre-muxed stream
-    const { stdout } = await execAsync(`yt-dlp -f "best[ext=mp4]/best" --get-url "${youtubeUrl}"`);
+    // Get best COMBINED stream with minimum quality of 720p
+    // Falls back to best available if no 720p+ combined stream exists
+    const { stdout } = await execAsync(
+      `yt-dlp -f "best[height>=720][ext=mp4]/best[height>=720]/best[ext=mp4]/best" --get-url "${youtubeUrl}"`,
+    );
 
     const streamUrl = stdout.trim().split('\n')[0];
 
