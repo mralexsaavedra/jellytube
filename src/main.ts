@@ -34,7 +34,7 @@ const main = async () => {
 
     logger.info('All channels processed.');
   } catch (error) {
-    logger.fatal({ error }, 'App crashed');
+    logger.error({ error }, 'App crashed');
     process.exit(1);
   }
 };
