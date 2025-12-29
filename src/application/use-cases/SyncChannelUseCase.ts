@@ -94,8 +94,8 @@ export class SyncChannelUseCase {
     const nfoPath = path.join(fullDir, `${fileName}.nfo`);
 
     // STRM Content
-    const invidiousUrl = Config.INVIDIOUS_URL.replace(/\/$/, '');
-    const finalStrmContent = `${invidiousUrl}/api/v1/videos/${video.id}`;
+    const proxyUrl = Config.PROXY_URL.replace(/\/$/, '');
+    const finalStrmContent = `${proxyUrl}/stream/${video.id}`;
 
     if (!(await this.fsAdapter.fileExists(strmPath))) {
       await this.fsAdapter.writeStrmFile(strmPath, finalStrmContent);

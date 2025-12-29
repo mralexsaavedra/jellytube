@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const envSchema = z.object({
-  INVIDIOUS_URL: z.string().url().default('https://invidious.io'),
+  PROXY_URL: z.string().url().default('http://jellytube-proxy:3000'),
   // OUTPUT_DIR removed as it is now hardcoded
   CONCURRENCY_LIMIT: z.coerce.number().int().positive().default(2),
   MAX_VIDEOS: z.coerce.number().int().positive().default(50),
