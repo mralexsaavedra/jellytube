@@ -8,55 +8,43 @@ services:
       - ./output:/app/output
     restart: unless-stopped
     depends_on:
-      - piped
+      - invidious
     networks:
       - jellytube_net
 
-  piped:
-    image: 1337kavin/piped:latest
-    container_name: piped
+  invidious:
+    image: quay.io/invidious/invidious:latest
+    container_name: invidious
     restart: unless-stopped
     ports:
-      - "8081:8080"
-    volumes:
-      - ./config.properties:/app/config.properties
-      - ./config.json:/app/config.json
+      - "3000:3000"
     environment:
-      - PORT=8080
-      - HTTP_WORKERS=2
-      - PROXY_PART=http://piped-proxy:8080
-      - COMPROMISED_PASSWORD_CHECK=true
-      - DISABLE_REGISTRATION=false
-      - FEED_RETENTION=30
-      - MATRIX_SERVER=https://matrix.org
-      - MATRIX_TOKEN=disabled
-      - CAPTCHA_BASE_URL=https://api.capmonster.cloud
-      - CAPTCHA_API_KEY=
+      INVIDIOUS_CONFIG: |
+        db:
+          dbname: invidious
+          user: invidious
+          password: secure_password_saavedra
+          host: postgres
+          port: 5432
+        check_tables: true
+        external_port: 3000
+        domain: localhost:3000
+        https_only: false
+        statistics_enabled: false
     depends_on:
       - postgres
-      - piped-proxy
-    networks:
-      - jellytube_net
-
-  piped-proxy:
-    image: 1337kavin/piped-proxy:latest
-    container_name: piped-proxy
-    restart: unless-stopped
-    environment:
-      - UDS=1
-    # No ports needed if only communicated internally via docker network
     networks:
       - jellytube_net
 
   postgres:
     image: postgres:17-alpine
-    container_name: piped-db
+    container_name: invidious-db
     restart: unless-stopped
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=piped
-      - POSTGRES_USER=piped
+      - POSTGRES_DB=invidious
+      - POSTGRES_USER=invidious
       - POSTGRES_PASSWORD=secure_password_saavedra
     networks:
       - jellytube_net

@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const envSchema = z.object({
-  PIPED_URL: z.string().url().default('https://piped.video'),
+  INVIDIOUS_URL: z.string().url().default('https://invidious.io'),
   // OUTPUT_DIR removed as it is now hardcoded
   CONCURRENCY_LIMIT: z.coerce.number().int().positive().default(2),
   MAX_VIDEOS: z.coerce.number().int().positive().default(50),
