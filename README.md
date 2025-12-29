@@ -25,7 +25,6 @@ Environment variables configure the behavior (see `.env.example`):
 | Variable            | Description                              | Default               |
 | ------------------- | ---------------------------------------- | --------------------- |
 | `PIPED_URL`         | Piped instance URL                       | `https://piped.video` |
-| `OUTPUT_DIR`        | Directory where files will be generated  | `./output`            |
 | `CONCURRENCY_LIMIT` | Simultaneous metadata fetches            | `2`                   |
 | `MAX_VIDEOS`        | Max recent videos to process per channel | `50`                  |
 | `SKIP_SHORTS`       | Skip Shorts videos (`true`/`false`)      | `false`               |

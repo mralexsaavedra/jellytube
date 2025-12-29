@@ -5,7 +5,7 @@ dotenv.config();
 
 const envSchema = z.object({
   PIPED_URL: z.string().url().default('https://piped.video'),
-  OUTPUT_DIR: z.string().default('./output'),
+  // OUTPUT_DIR removed as it is now hardcoded
   CONCURRENCY_LIMIT: z.coerce.number().int().positive().default(2),
   MAX_VIDEOS: z.coerce.number().int().positive().default(50),
   SKIP_SHORTS: z
@@ -21,6 +21,11 @@ const envSchema = z.object({
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
 });
 
-export type ConfigType = z.infer<typeof envSchema>;
+export type ConfigType = z.infer<typeof envSchema> & { OUTPUT_DIR: string };
 
-export const Config = envSchema.parse(process.env);
+const requestConfig = envSchema.parse(process.env);
+
+export const Config: ConfigType = {
+  ...requestConfig,
+  OUTPUT_DIR: './output',
+};
