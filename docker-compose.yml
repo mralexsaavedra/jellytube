@@ -7,3 +7,27 @@ services:
     volumes:
       - ./output:/app/output
     restart: unless-stopped
+    depends_on:
+      - piped
+
+  piped:
+    image: 1337kavin/piped:latest
+    container_name: piped
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./config.properties:/app/config.properties
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: piped-db
+    restart: unless-stopped
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=piped
+      - POSTGRES_USER=piped
+      - POSTGRES_PASSWORD=secure_password_saavedra
