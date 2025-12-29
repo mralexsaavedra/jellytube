@@ -1,6 +1,6 @@
 {
   "name": "@jellytube/app",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "JellyTube - Generate .strm files for YouTube channels",
   "main": "dist/main.js",
   "scripts": {
@@ -15,8 +15,6 @@
     "youtube",
     "strm"
   ],
-  "author": "Alex Saavedra",
-  "license": "MIT",
   "dependencies": {
     "dotenv": "^16.4.7",
     "execa": "^5.1.1",
