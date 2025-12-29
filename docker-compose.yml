@@ -20,6 +20,15 @@ services:
       - ./config.properties:/app/config.properties
     depends_on:
       - postgres
+      - piped-proxy
+
+  piped-proxy:
+    image: 1337kavin/piped-proxy:latest
+    container_name: piped-proxy
+    restart: unless-stopped
+    environment:
+      - UDS=1
+    # No ports needed if only communicated internally via docker network
 
   postgres:
     image: postgres:17-alpine
