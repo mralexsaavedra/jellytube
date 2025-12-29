@@ -1,0 +1,9 @@
+services:
+  jellytube:
+    image: mralexandersaavedra/jellytube:latest
+    container_name: jellytube
+    env_file:
+      - .env
+    volumes:
+      - ./output:/app/output
+    restart: unless-stopped

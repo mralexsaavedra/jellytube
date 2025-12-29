@@ -1,0 +1,49 @@
+{
+  "name": "jellytube",
+  "version": "0.1.0",
+  "description": "Ingestion microservice that generates .strm and .nfo files for Jellyfin/Plex without downloading videos",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "dev": "ts-node src/main.ts",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "jellyfin",
+    "plex",
+    "strm",
+    "youtube",
+    "piped",
+    "zero-storage"
+  ],
+  "author": "Alexander Saavedra",
+  "license": "MIT",
+  "dependencies": {
+    "@types/dotenv": "^6.1.1",
+    "dotenv": "^17.2.3",
+    "execa": "^5.1.1",
+    "fs-extra": "^11.2.0",
+    "p-limit": "^3.1.0",
+    "pino": "^8.17.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.10.6",
+    "@typescript-eslint/eslint-plugin": "^8.50.1",
+    "@typescript-eslint/parser": "^8.50.1",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "pino-pretty": "^10.3.1",
+    "prettier": "^3.7.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.50.1"
+  }
+}
