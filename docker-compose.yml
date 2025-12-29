@@ -21,6 +21,17 @@ services:
     volumes:
       - ./config.properties:/app/config.properties
       - ./config.json:/app/config.json
+    environment:
+      - PORT=8080
+      - HTTP_WORKERS=2
+      - PROXY_PART=http://piped-proxy:8080
+      - COMPROMISED_PASSWORD_CHECK=true
+      - DISABLE_REGISTRATION=false
+      - FEED_RETENTION=30
+      - MATRIX_SERVER=
+      - MATRIX_TOKEN=
+      - CAPTCHA_BASE_URL=https://api.capmonster.cloud
+      - CAPTCHA_API_KEY=
     depends_on:
       - postgres
       - piped-proxy
