@@ -20,6 +20,9 @@ services:
       - "8081:8080"
     volumes:
       - ./config.properties:/app/config.properties
+    environment:
+      - MATRIX_SERVER=
+      - MATRIX_TOKEN=
     depends_on:
       - postgres
       - piped-proxy
