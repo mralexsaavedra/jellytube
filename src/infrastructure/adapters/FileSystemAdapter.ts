@@ -1,4 +1,5 @@
 import * as fs from 'fs-extra';
+import * as https from 'https';
 import { IFileSystemAdapter } from '../../application/ports/IFileSystemAdapter';
 import { Video } from '../../domain/entities/Video';
 import { Channel } from '../../domain/entities/Channel';
@@ -59,5 +60,30 @@ export class FileSystemAdapter implements IFileSystemAdapter {
       return `${dateStr.substring(0, 4)}-${dateStr.substring(4, 6)}-${dateStr.substring(6, 8)}`;
     }
     return '';
+  }
+
+  async downloadImage(url: string, destPath: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      https
+        .get(url, (response) => {
+          if (response.statusCode !== 200) {
+            reject(new Error(`Failed to download image: ${response.statusCode}`));
+            return;
+          }
+
+          const fileStream = fs.createWriteStream(destPath);
+          response.pipe(fileStream);
+
+          fileStream.on('finish', () => {
+            fileStream.close();
+            resolve();
+          });
+
+          fileStream.on('error', (err) => {
+            fs.unlink(destPath, () => reject(err));
+          });
+        })
+        .on('error', reject);
+    });
   }
 }

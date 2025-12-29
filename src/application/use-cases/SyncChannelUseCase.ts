@@ -104,5 +104,38 @@ export class SyncChannelUseCase {
     if (!(await this.fsAdapter.fileExists(nfoPath))) {
       await this.fsAdapter.writeNfoFile(nfoPath, video, channel);
     }
+
+    // Download video thumbnail
+    const thumbPath = path.join(fullDir, `${fileName}.jpg`);
+    if (!(await this.fsAdapter.fileExists(thumbPath)) && fullDetails.thumbnail) {
+      try {
+        await this.fsAdapter.downloadImage(fullDetails.thumbnail, thumbPath);
+        logger.debug({ videoId: video.id }, 'Downloaded video thumbnail');
+      } catch (error) {
+        logger.warn({ videoId: video.id, error }, 'Failed to download video thumbnail');
+      }
+    }
+
+    // Download channel thumbnail (folder.jpg) - only once per channel
+    const channelThumbPath = path.join(Config.OUTPUT_DIR, channel.sanitizedName, 'folder.jpg');
+    if (!(await this.fsAdapter.fileExists(channelThumbPath))) {
+      try {
+        // Use channel avatar from fullDetails if available
+        const channelAvatarUrl = fullDetails.channel_follower_count
+          ? fullDetails.uploader_url
+          : null;
+        if (channelAvatarUrl) {
+          // Try to get channel info to find thumbnail
+          const channelInfo: any = await this.ytDlp.getChannelInfo(channelAvatarUrl);
+          const thumbnailUrl = channelInfo.thumbnails?.[0]?.url || channelInfo.thumbnail;
+          if (thumbnailUrl) {
+            await this.fsAdapter.downloadImage(thumbnailUrl, channelThumbPath);
+            logger.info({ channel: channel.name }, 'Downloaded channel thumbnail');
+          }
+        }
+      } catch (error) {
+        logger.warn({ channel: channel.name, error }, 'Failed to download channel thumbnail');
+      }
+    }
   }
 }

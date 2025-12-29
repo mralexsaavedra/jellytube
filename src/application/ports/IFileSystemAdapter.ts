@@ -6,4 +6,5 @@ export interface IFileSystemAdapter {
   writeStrmFile(path: string, url: string): Promise<void>;
   writeNfoFile(path: string, video: Video, channel: Channel): Promise<void>;
   fileExists(path: string): Promise<boolean>;
+  downloadImage(url: string, destPath: string): Promise<void>;
 }
