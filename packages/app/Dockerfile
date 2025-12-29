@@ -6,13 +6,17 @@ WORKDIR /app
 # Install pnpm
 RUN npm install -g pnpm
 
-COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile
+COPY package.json ./
+RUN pnpm install --prod
 
 COPY tsconfig.json ./
 COPY src ./src
 
+# Install dev dependencies for build
+RUN pnpm install
+
 RUN pnpm run build
+
 # Remove prepare script to prevent husky from running during prune
 RUN npm pkg delete scripts.prepare
 # Prune dev dependencies
