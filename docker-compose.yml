@@ -31,6 +31,7 @@ services:
         domain: localhost:3000
         https_only: false
         statistics_enabled: false
+        hmac_key: "jellytube_hmac_secret_key_change_in_production_2024"
     depends_on:
       - postgres
     networks:
