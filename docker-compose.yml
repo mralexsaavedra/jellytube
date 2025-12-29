@@ -23,7 +23,7 @@ services:
         db:
           dbname: invidious
           user: invidious
-          password: secure_password_saavedra
+          password: ${POSTGRES_PASSWORD}
           host: postgres
           port: 5432
         check_tables: true
@@ -31,7 +31,7 @@ services:
         domain: localhost:3000
         https_only: false
         statistics_enabled: false
-        hmac_key: "jellytube_hmac_secret_key_change_in_production_2024"
+        hmac_key: "${INVIDIOUS_HMAC_KEY}"
     depends_on:
       - postgres
     networks:
@@ -46,7 +46,7 @@ services:
     environment:
       - POSTGRES_DB=invidious
       - POSTGRES_USER=invidious
-      - POSTGRES_PASSWORD=secure_password_saavedra
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     networks:
       - jellytube_net
 
